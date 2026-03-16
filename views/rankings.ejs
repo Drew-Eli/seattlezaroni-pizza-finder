@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍕</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="font-bold text-xl text-red-600 tracking-wider">SeattleZaroni</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/rankings" class="text-red-600 font-semibold transition duration-300">Rankings</a>
+                    <a href="/#about" class="text-gray-600 hover:text-red-600 transition duration-300">About</a>
+                    <a href="#" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">Join the Club</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden items-center">
+                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/rankings" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 bg-gray-50">Rankings</a>
+                <a href="/#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-red-600 hover:bg-red-700">Join the Club</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+    <div class="pt-24 pb-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">All Rankings</h1>
+            
+            <div class="overflow-hidden bg-white shadow overflow-hidden sm:rounded-md border border-gray-200">
+                <ul role="list" class="divide-y divide-gray-200">
+                    <% places.forEach((place, index) => { %>
+                    <li>
+                        <a href="/place/<%= place.id %>" class="block hover:bg-gray-50 transition duration-150 ease-in-out">
+                            <div class="flex items-center px-4 py-4 sm:px-6">
+                                <div class="min-w-0 flex-1 flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-red-100 text-red-800 font-bold text-lg">
+                                            #<%= index + 1 %>
+                                        </span>
+                                    </div>
+                                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                                        <div>
+                                            <p class="text-lg font-medium text-red-600 truncate"><%= place.name %></p>
+                                            <p class="mt-1 flex items-center text-sm text-gray-500">
+                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                <span class="truncate"><%= place.neighborhood %></span>
+                                            </p>
+                                        </div>
+                                        <div class="hidden md:block">
+                                            <div>
+                                                <p class="text-sm text-gray-900">
+                                                    Average Rating: 
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                        <%= place.avg_rating %>
+                                                    </span>
+                                                </p>
+                                                <p class="mt-2 text-sm text-gray-500">
+                                                    <%= place.review_count %> reviews
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; <%= new Date().getFullYear() %> SeattleZaroni. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
